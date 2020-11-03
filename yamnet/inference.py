@@ -19,7 +19,8 @@ from __future__ import division, print_function
 import sys
 
 import numpy as np
-import resampy
+#import resampy
+import scipy.signal
 import soundfile as sf
 import tensorflow as tf
 
@@ -46,7 +47,10 @@ def main(argv):
     if len(waveform.shape) > 1:
       waveform = np.mean(waveform, axis=1)
     if sr != params.sample_rate:
-      waveform = resampy.resample(waveform, sr, params.sample_rate)
+      #waveform = resampy.resample(waveform, sr, params.sample_rate)
+      desired_length = int(round(float(len(waveform)) /
+                               sr * params.sample_rate))
+      waveform = scipy.signal.resample(waveform, desired_length)
 
     # Predict YAMNet classes.
     scores, embeddings, spectrogram = yamnet(waveform)
