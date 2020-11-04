@@ -16,6 +16,3 @@ cd aiyprojects-raspbian
 git checkout master
 sudo scripts/configure-driver.sh
 sudo scripts/install-alsa-config.sh
-
-cd
-cp raspberrypi3-yamnet-sed/.asoundrc .
