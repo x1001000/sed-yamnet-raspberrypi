@@ -49,10 +49,9 @@ while True:
         waveform = waveform.astype('float32')
         scores, embeddings, spectrogram = yamnet(waveform)
         prediction = np.mean(scores, axis=0)
-        top5_i = np.argsort(prediction)[::-1][:5]
-        print(f'{time.ctime().split()[3]}\n' +
-                '\n'.join('  {:20s}: {:.3f}'.format(yamnet_classes[i], prediction[i])
-                            for i in top5_i))
+        top3 = np.argsort(prediction)[::-1][:3]
+        print(time.ctime().split()[3],
+            '\t'.join(f'\t{int(prediction[i]*100)}% {yamnet_classes[i]}' for i in top3))
     except:
         stream.stop_stream()
         stream.close()
