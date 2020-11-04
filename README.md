@@ -8,5 +8,5 @@
 1. Reboot to take effect  
 `sudo reboot`
 1. Run SED  
-`cd raspberrypi3-yamnet-sed && python3 sed.py`
+`cd raspberrypi3-yamnet-sed/yamnet && python3 sed.py`
 1. There you go!
