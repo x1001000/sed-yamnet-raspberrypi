@@ -6,7 +6,7 @@ pcm.!default {
 pcm.mic {
   type plug
   slave {
-    pcm "hw:1,0"
+    pcm "hw:0,0"
   }
 }
 pcm.speaker {
