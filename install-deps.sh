@@ -8,11 +8,12 @@ wget https://github.com/Qengineering/Tensorflow-Raspberry-Pi/raw/master/tensorfl
 pip3 install pip --upgrade
 pip3 install tensorflow-2.1.0-cp37-cp37m-linux_armv7l.whl
 pip3 install h5py==2.10.0
-pip3 install soundfile pyaudio
+pip3 install soundfile
+pip3 install pyaudio
 
 cd raspberrypi3-yamnet-sed/yamnet
 wget https://storage.googleapis.com/audioset/yamnet.h5
-cp .asoundrc ..
+cp ../.asoundrc ~
 
 cd
 git clone https://github.com/google/aiyprojects-raspbian
