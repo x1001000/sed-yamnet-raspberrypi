@@ -11,13 +11,11 @@ pip3 install h5py==2.10.0
 pip3 install soundfile
 pip3 install pyaudio
 
-cd raspberrypi3-yamnet-sed/yamnet
-wget https://storage.googleapis.com/audioset/yamnet.h5
-cp ../.asoundrc ~
-
-cd
 git clone https://github.com/google/aiyprojects-raspbian
 cd aiyprojects-raspbian
 git checkout master
 sudo scripts/configure-driver.sh
 sudo scripts/install-alsa-config.sh
+
+cd
+cp raspberrypi3-yamnet-sed/.asoundrc .
