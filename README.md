@@ -18,3 +18,5 @@
 1. https://github.com/tensorflow/tensorflow/issues/44467
 1. https://github.com/hellmanj/AIY-voice-kit-python/blob/master/HACKING.md
 1. https://people.csail.mit.edu/hubert/pyaudio/
+## Made by
+![Alt text](x1001000-lab.jpg)
