@@ -16,3 +16,5 @@ cd aiyprojects-raspbian
 git checkout master
 sudo scripts/configure-driver.sh
 sudo scripts/install-alsa-config.sh
+
+sudo timedatectl set-timezone Asia/Taipei
