@@ -13,38 +13,38 @@ yamnet.load_weights('yamnet.h5')
 yamnet_classes = yamnet_model.class_names('yamnet_class_map.csv')
 
 import os, pyaudio, time
-os.system('jack_control start')
+#os.system('jack_control start')
 p = pyaudio.PyAudio()
 os.system('clear')
 print('Detecting Sound Events...')
 
-CHUNK = 1024
+CHUNK = 1024 # frames_per_buffer # samples per chunk
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 1024 / 1000
-INFERENCE_WINDOW = 4 * int(RATE / CHUNK * RECORD_SECONDS)
+RECORD_SECONDS = 0.96#1024 / 1000                           # 15 CHUNKs
+INFERENCE_WINDOW = 4 * int(RATE / CHUNK * RECORD_SECONDS)   # 60 CHUNKs
 
-frames = []
+stream = p.open(format=FORMAT,
+        channels=CHANNELS,
+        rate=RATE,
+        input=True,
+        frames_per_buffer=CHUNK)
+
+CHUNKs = []
 while True:
     try:
-        stream = p.open(format=FORMAT,
-                channels=CHANNELS,
-                rate=RATE,
-                input=True,
-                frames_per_buffer=CHUNK)
+        stream.start_stream()
         for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
             data = stream.read(CHUNK)
-            frames.append(data)
-            #print(len(frames))
-        
+            CHUNKs.append(data)
+            #print(len(CHUNKs))
         stream.stop_stream()
-        stream.close()
 
-        if len(frames) > INFERENCE_WINDOW:
-            frames = frames[int(RATE / CHUNK * RECORD_SECONDS):]
-            #print('new len: ',len(frames))
-        wav_data = np.frombuffer(b''.join(frames), dtype=np.int16)
+        if len(CHUNKs) > INFERENCE_WINDOW:
+            CHUNKs = CHUNKs[int(RATE / CHUNK * RECORD_SECONDS):]
+            #print('new len: ',len(CHUNKs))
+        wav_data = np.frombuffer(b''.join(CHUNKs), dtype=np.int16)
         waveform = wav_data / tf.int16.max#32768.0
         waveform = waveform.astype('float32')
         scores, embeddings, spectrogram = yamnet(waveform)
