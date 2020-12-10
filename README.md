@@ -19,4 +19,4 @@
 1. https://github.com/hellmanj/AIY-voice-kit-python/blob/master/HACKING.md
 1. https://people.csail.mit.edu/hubert/pyaudio/
 ## To be continued
-![](x1001000-lab.jpg)
+![十百千實驗室](x1001000-lab.jpg)
