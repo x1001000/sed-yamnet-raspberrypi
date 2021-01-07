@@ -51,7 +51,7 @@ while True:
         prediction = np.mean(scores, axis=0)
         top3 = np.argsort(prediction)[::-1][:3]
         print(time.ctime().split()[3],
-            ''.join(f'\t\t\t{int(prediction[i]*10)} {yamnet_classes[i][:13]}' for i in top3))
+            ''.join(f'\t{yamnet_classes[i][:10]} ({prediction[i]:.2f})' for i in top3))
     except:
         stream.stop_stream()
         stream.close()
