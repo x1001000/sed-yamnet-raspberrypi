@@ -1,10 +1,10 @@
-print('Loading TF and stuff...')
+print('Loading TensorFlow and stuff...')
 import numpy as np
 import scipy.signal
 import soundfile as sf
 import tensorflow as tf
 
-print('Loading YAMNet model and params...')
+print('Loading YAMNet and hyperparameters...')
 import params as yamnet_params
 import yamnet as yamnet_model
 params = yamnet_params.Params()
