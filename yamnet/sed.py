@@ -10,7 +10,7 @@ import yamnet as yamnet_model
 params = yamnet_params.Params()
 yamnet = yamnet_model.yamnet_frames_model(params)
 yamnet.load_weights('yamnet.h5')
-yamnet_classes = yamnet_model.class_names('yamnet_class_map.csv')
+yamnet_classes = yamnet_model.class_names('yamnet_class_map_zh-tw.csv')
 
 import os, pyaudio, time
 #os.system('jack_control start')
