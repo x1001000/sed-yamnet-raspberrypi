@@ -22,8 +22,8 @@ CHUNK = 1024 # frames_per_buffer # samples per chunk
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 0.96#1024 / 1000                           # 15 CHUNKs
-INFERENCE_WINDOW = 4 * int(RATE / CHUNK * RECORD_SECONDS)   # 60 CHUNKs
+RECORD_SECONDS = 1.024#0.96                                 # 16 CHUNKs
+INFERENCE_WINDOW = 2 * int(RATE / CHUNK * RECORD_SECONDS)   # 32 CHUNKs
 
 stream = p.open(format=FORMAT,
         channels=CHANNELS,
@@ -48,10 +48,14 @@ while True:
         waveform = wav_data / tf.int16.max#32768.0
         waveform = waveform.astype('float32')
         scores, embeddings, spectrogram = yamnet(waveform)
-        prediction = np.mean(scores, axis=0)
+        print(scores.shape)
+        print(embeddings.shape)
+        print(spectrogram.shape)
+        prediction = np.mean(scores[:-1], axis=0) # last score comes from incomplete samples
+        print(prediction.shape)
         top3 = np.argsort(prediction)[::-1][:3]
-        print(time.ctime().split()[3],
-            ''.join(f"\t{yamnet_classes[i].ljust(10, '　')}{prediction[i]:.1f}" for i in top3))
+        print(time.ctime().split()[3], '\t',
+            ''.join(f"{prediction[i]:.1f}👈{yamnet_classes[i].ljust(11, '　')}" for i in top3))
     except:
         stream.stop_stream()
         stream.close()
