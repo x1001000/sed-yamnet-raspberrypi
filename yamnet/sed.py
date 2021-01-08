@@ -55,7 +55,7 @@ while True:
         # print(prediction.shape)
         top3 = np.argsort(prediction)[::-1][:3]
         print(time.ctime().split()[3], '\t',
-            ''.join(f"{prediction[i]:.1f}👈{yamnet_classes[i][:11].ljust(11, '　')}" for i in top3))
+            ''.join(f"{prediction[i]:.1f}👈{yamnet_classes[i][:8].ljust(8, '　')}" for i in top3))
     except:
         stream.stop_stream()
         stream.close()
