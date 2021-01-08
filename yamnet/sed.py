@@ -54,7 +54,7 @@ while True:
         prediction = np.mean(scores[:-1], axis=0) # last score comes from insufficient samples
         # print(prediction.shape)
         top3 = np.argsort(prediction)[::-1][:3]
-        print(time.ctime().split()[3], '  ',
+        print(time.ctime().split()[3],
             ''.join(f"{prediction[i]:.1f}👈{yamnet_classes[i][:8].ljust(8, '　')}" for i in top3))
     except:
         stream.stop_stream()
