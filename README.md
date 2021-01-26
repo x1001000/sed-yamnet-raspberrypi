@@ -19,7 +19,7 @@
 1. https://github.com/hellmanj/AIY-voice-kit-python/blob/master/HACKING.md
 1. https://people.csail.mit.edu/hubert/pyaudio/
 ## Transfer Learning
-- Data collecting and labeling always costs a huge amount of manpower…
+- Data collecting and labeling costs a huge amount of manpower…
 - Model training and testing need some computing power too…
 - With my Colab notebook: [Transfer Learning: From YAMNet to YAMNet-tw](https://colab.research.google.com/drive/1N_IZXkFJItbzayubi4WGVG0bZmdMgvka?usp=sharing)
   - 6.5hr-long videos 👉 labeled, downloaded and feature extracted within an hour
