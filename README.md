@@ -25,5 +25,3 @@
   - 6.5hr-long videos 👉 labeled, downloaded and feature extracted within an hour
   - model.fit(training data) 👉 a few minutes without GPU
   - model.evaluate(testing data) 👉 accuracy 0.97
-## To be continued
-![十百千實驗室](x1001000-lab.jpg)
