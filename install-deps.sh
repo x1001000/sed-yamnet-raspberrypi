@@ -3,6 +3,7 @@
 sudo apt update
 sudo apt install -y libhdf5-dev
 sudo apt install -y libatlas-base-dev
+sudo apt install -y screen
 
 wget https://github.com/Qengineering/Tensorflow-Raspberry-Pi/raw/master/tensorflow-2.1.0-cp37-cp37m-linux_armv7l.whl
 pip3 install pip --upgrade
