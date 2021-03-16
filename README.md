@@ -11,13 +11,6 @@
 1. Run SED  
 `cd && cd raspberrypi3-yamnet-sed/yamnet && python3 sed.py`
 1. There you go!
-## Transfer Learning
-- Data collecting and labeling costs a huge amount of manpower…
-- Model training and testing need some computing power too…
-- With my Colab notebook: [Transfer Learning: From YAMNet to YAMNet-tw](https://colab.research.google.com/drive/1N_IZXkFJItbzayubi4WGVG0bZmdMgvka?usp=sharing)
-  - 6.5hr-long videos 👉 labeled, downloaded and feature extracted within an hour
-  - model.fit(training data) 👉 a few minutes without GPU
-  - model.evaluate(testing data) 👉 accuracy 0.97
 ## References
 1. https://www.tensorflow.org/guide/keras/transfer_learning
 1. https://www.tensorflow.org/tutorials/images/transfer_learning
