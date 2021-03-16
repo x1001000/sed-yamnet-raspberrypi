@@ -10,6 +10,7 @@ pip3 install tensorflow-2.1.0-cp37-cp37m-linux_armv7l.whl
 pip3 install h5py==2.10.0
 pip3 install soundfile
 pip3 install pyaudio
+pip3 install pandas
 
 git clone https://github.com/google/aiyprojects-raspbian
 cd aiyprojects-raspbian

@@ -1,10 +1,10 @@
-print('Loading TensorFlow and stuff...')
+print('Loading TensorFlow...')
 import numpy as np
 import scipy.signal
 import soundfile as sf
 import tensorflow as tf
 
-print('Loading YAMNet and hyperparameters...')
+print('Loading YAMNet...')
 import params as yamnet_params
 import yamnet as yamnet_model
 params = yamnet_params.Params()
@@ -32,31 +32,31 @@ stream = p.open(format=FORMAT,
         frames_per_buffer=CHUNK)
 
 CHUNKs = []
-while True:
-    try:
-        stream.start_stream()
-        for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
-            data = stream.read(CHUNK)
-            CHUNKs.append(data)
-            # print(len(CHUNKs))
-        stream.stop_stream()
+with open('sed.npy', 'ab') as f:
+    while True:
+        try:
+            stream.start_stream()
+            for i in range(0, int(RATE / CHUNK * RECORD_SECONDS)):
+                data = stream.read(CHUNK)
+                CHUNKs.append(data)
+                # print(len(CHUNKs))
+            stream.stop_stream()
 
-        if len(CHUNKs) > INFERENCE_WINDOW:
-            CHUNKs = CHUNKs[int(RATE / CHUNK * RECORD_SECONDS):]
-            # print('new len: ',len(CHUNKs))
-        wav_data = np.frombuffer(b''.join(CHUNKs), dtype=np.int16)
-        waveform = wav_data / tf.int16.max#32768.0
-        waveform = waveform.astype('float32')
-        scores, embeddings, spectrogram = yamnet(waveform)
-        # print(scores.shape)
-        # print(embeddings.shape)
-        # print(spectrogram.shape)
-        prediction = np.mean(scores[:-1], axis=0) # last score comes from insufficient samples
-        # print(prediction.shape)
-        top3 = np.argsort(prediction)[::-1][:3]
-        print(time.ctime().split()[3],
-            ''.join(f" {int(prediction[i]*10)}👈{yamnet_classes[i][:7].ljust(7, '　')}" for i in top3))
-    except:
-        stream.stop_stream()
-        stream.close()
-        p.terminate()
+            if len(CHUNKs) > INFERENCE_WINDOW:
+                CHUNKs = CHUNKs[int(RATE / CHUNK * RECORD_SECONDS):]
+                # print('new len: ',len(CHUNKs))
+            wav_data = np.frombuffer(b''.join(CHUNKs), dtype=np.int16)
+            waveform = wav_data / tf.int16.max#32768.0
+            waveform = waveform.astype('float32')
+            scores, embeddings, spectrogram = yamnet(waveform)
+            prediction = np.mean(scores[:-1], axis=0) # last one scores comes from insufficient samples
+            assert (prediction==scores[0]).numpy().all() # only one scores at RECORD_SECONDS = 1.024 
+            top5 = np.argsort(prediction)[::-1][:5]
+            print(time.ctime().split()[3],
+                ''.join(f" {prediction[i]:.2f} 👉{yamnet_classes[i][:7].ljust(7, '　')}" for i in top5))
+            np.save(f, np.concatenate(([time.time()], prediction)))
+        except:
+            stream.stop_stream()
+            stream.close()
+            p.terminate()
+            f.close()
