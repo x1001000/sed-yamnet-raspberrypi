@@ -16,7 +16,7 @@ import os, pyaudio, time
 #os.system('jack_control start')
 p = pyaudio.PyAudio()
 os.system('clear')
-print('Sound Event Detection by making inference on every 1.024 second audio stream from the microphone!\n')
+print('Sound Event Detection by running inference on every 1.024 second audio stream from the microphone!\n')
 
 CHUNK = 1024 # frames_per_buffer # samples per chunk
 FORMAT = pyaudio.paInt16
