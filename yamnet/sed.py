@@ -51,7 +51,7 @@ with open('sed.npy', 'ab') as f:
             waveform = waveform.astype('float32')
             scores, embeddings, spectrogram = yamnet(waveform)
             prediction = np.mean(scores[:-1], axis=0) # last one scores comes from insufficient samples
-            #assert (prediction==scores[0]).numpy().all() # only one scores at RECORD_SECONDS = 1.024 
+            assert len(scores[:-1]) == INFERENCE_WINDOW // 15#(prediction==scores[0]).numpy().all() # only one scores at RECORD_SECONDS = 1.024 
             top5 = np.argsort(prediction)[::-1][:5]
             print(time.ctime().split()[3],
                 ''.join((f" {prediction[i]:.2f} 👉{yamnet_classes[i][:7].ljust(7, '　')}" if prediction[i] >= THRESHOLD else '') for i in top5))
