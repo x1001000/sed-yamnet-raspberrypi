@@ -23,8 +23,8 @@ FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
 RECORD_SECONDS = 1.024                                          # need at least 975 ms
-INFERENCE_WINDOW = 4 * int(RATE / CHUNK * RECORD_SECONDS)       # 4 * 16 CHUNKs
-THRESHOLD = 0.5
+INFERENCE_WINDOW = 2 * int(RATE / CHUNK * RECORD_SECONDS)       # 2 * 16 CHUNKs
+THRESHOLD = 0.4
 
 stream = p.open(format=FORMAT,
         channels=CHANNELS,
