@@ -1,6 +1,6 @@
 print('Loading TensorFlow...')
 import numpy as np
-import scipy.signal
+#import scipy.signal
 import soundfile as sf
 import tensorflow as tf
 
