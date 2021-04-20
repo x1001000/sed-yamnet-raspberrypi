@@ -16,14 +16,15 @@ import os, pyaudio, time
 #os.system('jack_control start')
 p = pyaudio.PyAudio()
 os.system('clear')
-print('Sound Event Detection by running inference on every 1.024 second audio stream from the microphone!\n')
+#print('Sound Event Detection by running inference on every 1.024 second audio stream from the microphone!\n')
 
 CHUNK = 1024 # frames_per_buffer # samples per chunk
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
 RATE = 16000
-RECORD_SECONDS = 1.024#0.96                                 # 16 CHUNKs
-INFERENCE_WINDOW = 1 * int(RATE / CHUNK * RECORD_SECONDS)   # 16 CHUNKs
+RECORD_SECONDS = 1.024                                          # need at least 975 ms
+INFERENCE_WINDOW = 4 * int(RATE / CHUNK * RECORD_SECONDS)       # 4 * 16 CHUNKs
+THRESHOLD = 0.5
 
 stream = p.open(format=FORMAT,
         channels=CHANNELS,
@@ -50,10 +51,10 @@ with open('sed.npy', 'ab') as f:
             waveform = waveform.astype('float32')
             scores, embeddings, spectrogram = yamnet(waveform)
             prediction = np.mean(scores[:-1], axis=0) # last one scores comes from insufficient samples
-            assert (prediction==scores[0]).numpy().all() # only one scores at RECORD_SECONDS = 1.024 
+            #assert (prediction==scores[0]).numpy().all() # only one scores at RECORD_SECONDS = 1.024 
             top5 = np.argsort(prediction)[::-1][:5]
             print(time.ctime().split()[3],
-                ''.join(f" {prediction[i]:.2f} 👉{yamnet_classes[i][:7].ljust(7, '　')}" for i in top5))
+                ''.join((f" {prediction[i]:.2f} 👉{yamnet_classes[i][:7].ljust(7, '　')}" if prediction[i] >= THRESHOLD else '') for i in top5))
             np.save(f, np.concatenate(([time.time()], prediction)))
         except:
             stream.stop_stream()
